@@ -10,9 +10,12 @@ namespace Snake
         public int X { get; set; }
         public int Y { get; set; }
         public string Orientation { get; set; }
-        public string OldOrientation { get; set; }
+        
+        public int Xdir { get; set; }
+        
+        public int Ydir { get; set; }
 
-        public List<int> TurnCord;
+        public int length { get; set; }
 
         public List<SnakeParts> Parts = new List<SnakeParts>();
         public Snake()
@@ -20,29 +23,76 @@ namespace Snake
             X = 320 / 2;
             Y = 200 / 2;
             Orientation = "right";
-            OldOrientation = "right";
-            TurnCord = new List<int>{X, Y};
-            Parts.Add(new SnakeParts(X,Y,Orientation));
-            AddPart();
+            length = 1;
+            Parts.Add(new SnakeParts(X, Y, Orientation));
+        }
+        
+        public void setDir(int x, int y)
+        {
+            Xdir = x;
+            Ydir = y;
         }
 
         public void AddPart()
         {
-            var lastPart = Parts.Last();
-            switch (lastPart.Orientation)
+            var firstPart = Parts.First();
+            firstPart.X += Xdir;
+            firstPart.Y += Ydir;
+            length++;
+            Parts.Add(new SnakeParts(firstPart.X, firstPart.Y, Orientation));
+        }
+        
+        private void Update()
+        {
+            var firstPart = Parts.First();
+            Parts.RemoveAt(0);
+            firstPart.X += Xdir;
+            firstPart.Y += Ydir;
+            Parts.Add(firstPart);
+            /*
+            switch (Orientation)
             {
                 case "up":
-                    Parts.Add(new SnakeParts(lastPart.X, lastPart.Y + 5, lastPart.Orientation));
+                    var part = new SnakeParts(firstPart.X, firstPart.Y - 5, Orientation);
                     break;
                 case "down":
-                    Parts.Add(new SnakeParts(lastPart.X, lastPart.Y - 5, lastPart.Orientation));
+                    Parts.Add(new SnakeParts(firstPart.X, firstPart.Y + 5, Orientation));
                     break;
                 case "left":
-                    Parts.Add(new SnakeParts(lastPart.X + 5, lastPart.Y, lastPart.Orientation));
+                    Parts.Add(new SnakeParts(firstPart.X - 5, firstPart.Y, Orientation));
                     break;
                 case "right":
-                    Parts.Add(new SnakeParts(lastPart.X -5, lastPart.Y, lastPart.Orientation));
+                    Parts.Add(new SnakeParts(firstPart.X + 5, firstPart.Y, Orientation));
                     break;
+            }*/
+
+
+
+        }
+
+        public void Show(Screen screen)
+        {
+            for (int i = 0; i < length; i++)
+            {
+                var part = Parts[i];
+                if (Orientation == "up" || Orientation == "down")
+                {
+                    screen.SetColor("#336600");
+                    screen.Rectangle(part.X, part.Y, 5, 5);
+                    /*
+                    screen.SetColor("#000");
+                    screen.Rectangle(part.X, part.Y + 3, 5, 2);
+                    */
+                }
+                else
+                {
+                    screen.SetColor("#336600");
+                    screen.Rectangle(part.X, part.Y, 5, 5);
+                    /*
+                    screen.SetColor("#000");
+                    screen.Rectangle(part.X + 3, part.Y, 2, 5);
+                    */
+                }
             }
         }
         public void Draw(Screen screen)
@@ -53,65 +103,12 @@ namespace Snake
                 Environment.Exit(0);
             }
 
-            foreach (var part in Parts)
-            {
-                if (part.X == TurnCord[0] || part.Y == TurnCord[1])
-                {
-                    switch (Orientation)
-                    {
-                        case "down":
-                            part.Y += 5;
-                            break;
-                        case "up":
-                            part.Y -= 5;
-                            break;
-                        case "right":
-                            part.X += 5;
-                            break;
-                        case "left":
-                            part.X -= 5;
-                            break;
-                    }
+            Update();
+            Show(screen);
 
-                    part.Orientation = Orientation;
-                }
-                else if (part.X != TurnCord[0] && part.Y != TurnCord[1])
-                {
-                    switch (OldOrientation)
-                    {
-                        case "down":
-                            part.Y += 5;
-                            break;
-                        case "up":
-                            part.Y -= 5;
-                            break;
-                        case "right":
-                            part.X += 5;
-                            break;
-                        case "left":
-                            part.X -= 5;
-                            break;
-                    }
-
-                    part.Orientation = OldOrientation;
-                }
-
-                if (Orientation == "up" || Orientation == "down")
-                {
-                    screen.SetColor("#336600");
-                    screen.Rectangle(part.X, part.Y, 5, 3);
-                    screen.SetColor("#000");
-                    screen.Rectangle(part.X, part.Y + 3, 5, 2);
-                }
-                else
-                {
-                    screen.SetColor("#336600");
-                    screen.Rectangle(part.X, part.Y, 3, 5);
-                    screen.SetColor("#000");
-                    screen.Rectangle(part.X + 3, part.Y, 2, 5);
-                }
-            }
+            
             screen.Buffer.Commit();
         }
+            
+        }
     }
-}

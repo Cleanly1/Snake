@@ -30,18 +30,7 @@ namespace Snake
                         {
                             break;
                         }
-                        if (snake.Orientation == "left")
-                        {
-                            snake.Orientation = "left";
-                        }
-                        else
-                        {
-                            snake.TurnCord.Clear();
-                            snake.OldOrientation = snake.Orientation;
-                            snake.Orientation = "right";
-                            snake.TurnCord.Add(snake.Parts.First().X);
-                            snake.TurnCord.Add(snake.Parts.First().Y);
-                        }
+                        snake.setDir(+5, 0);
                         break;
 
                     case ConsoleKey.LeftArrow:
@@ -49,18 +38,8 @@ namespace Snake
                         {
                             break;
                         }
-                        if (snake.Orientation == "right")
-                        {
-                            snake.Orientation = "right";
-                        }
-                        else
-                        {
-                            snake.TurnCord.Clear();
-                            snake.OldOrientation = snake.Orientation;
-                            snake.Orientation = "left";
-                            snake.TurnCord.Add(snake.Parts.First().X);
-                            snake.TurnCord.Add(snake.Parts.First().Y);
-                        }
+
+                        snake.setDir(-5, 0);
                         break;
 
                     case ConsoleKey.UpArrow:
@@ -68,18 +47,7 @@ namespace Snake
                         {
                             break;
                         }
-                        if (snake.Orientation == "down")
-                        {
-                            snake.Orientation = "down";
-                        }
-                        else
-                        {
-                            snake.TurnCord.Clear();
-                            snake.OldOrientation = snake.Orientation;
-                            snake.Orientation = "up";
-                            snake.TurnCord.Add(snake.Parts.First().X);
-                            snake.TurnCord.Add(snake.Parts.First().Y);
-                        }
+                        snake.setDir(0, -5);
                         break;
 
                     case ConsoleKey.DownArrow:
@@ -87,18 +55,7 @@ namespace Snake
                         {
                             break;
                         }
-                        if (snake.Orientation == "up")
-                        {
-                            snake.Orientation = "up";
-                        }
-                        else
-                        {
-                            snake.TurnCord.Clear();
-                            snake.OldOrientation = snake.Orientation;
-                            snake.Orientation = "down";
-                            snake.TurnCord.Add(snake.Parts.First().X);
-                            snake.TurnCord.Add(snake.Parts.First().Y);
-                        }
+                        snake.setDir(0, +5);
                         break;
 
                     case ConsoleKey.Escape:
@@ -133,13 +90,13 @@ namespace Snake
                     {
                         _window.Screen.SetColor("#33cc33");
                         _window.Screen.Rectangle(0,0, 320, 200);
+                        apple.Draw(Random, _window.Screen, snake.Parts);
                         snake.Draw(_window.Screen);
                         if (apple.CheckIfEat(_window.Screen, snake.Parts))
                         {
                             snake.AddPart();
                             Score += 1;
                         }
-                        apple.Draw(Random, _window.Screen, snake.Parts);
                         _window.Screen.Text(1, 1, $"Score: {Score}");
                         _window.Screen.Text(8,8, $"{apple.RandomX} {apple.RandomY}");
                     });
