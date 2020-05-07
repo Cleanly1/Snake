@@ -25,9 +25,8 @@ namespace Snake
             {
                 switch (key)
                 {
-                    case ConsoleKey.S :
-                        game.Start();
-                        break;
+                    
+                    
                     case ConsoleKey.RightArrow:
                         if (game.Paused)
                         {
@@ -88,12 +87,40 @@ namespace Snake
                         if (game.Paused)
                         {
                             game.Resume();
-                        }
-                        else
-                        {
-                            game.Pause();
+                            break;
                         }
 
+                        _window.Invoke(() => { _window.Screen.Text(8, 8, "Paused"); });
+                        game.Pause();
+                        
+
+                        break;
+                    
+                    case ConsoleKey.S:
+
+                        if (!game.Started)
+                        {
+                            game.Start(); 
+                        }
+                        
+                        break;
+                    
+                    case ConsoleKey.B:
+                        if (!game.Started)
+                        {
+                            snake.SnakeColor = "#0000ff";
+                            snake.SnakeSecondColor = "#ffff00";
+                        }
+                        
+                        break;
+                    
+                    case ConsoleKey.O:
+                        if (!game.Started)
+                        {
+                            snake.SnakeColor = "#ff9900";
+                            snake.SnakeSecondColor = "#ffff00";
+                            
+                        }
                         break;
 
                     default:
@@ -106,9 +133,13 @@ namespace Snake
                 window.Invoke(() =>
                 {
                     _window.Screen.SetColor("#33cc33");
-                    _window.Screen.Rectangle(0,0, 320, 200);
+                    _window.Screen.Rectangle(0,0, 200, 200);
+                    _window.Screen.SetColor("#669999");
+                    _window.Screen.Rectangle(200,0, 120, 200);
                     _window.Screen.SetColor("#000");
-                    _window.Screen.Text(320/2 - 50, 200/2, "Press \"S\" to start the game");
+                    _window.Screen.Text(200/2 - 50, 200/2, "Press \"S\" to start the game");
+                    _window.Screen.Text(205, 10, "Press \"B\" for Blue Snake");
+                    _window.Screen.Text(205, 15, "Press \"O\" for Orange Snake");
                 });
                 //game.Start();
                 snake = new Snake();
@@ -117,7 +148,7 @@ namespace Snake
                     window.Invoke(() =>
                     {
                         _window.Screen.SetColor("#33cc33");
-                        _window.Screen.Rectangle(0,0, 320, 200);
+                        _window.Screen.Rectangle(0,0, 200, 200);
                         apple.Draw(Random, _window.Screen, snake.Parts);
                         snake.Draw(_window.Screen);
                         if (apple.CheckIfEat(_window.Screen, snake.Parts))
@@ -125,8 +156,11 @@ namespace Snake
                             snake.AddPart();
                             Score += 1;
                         }
-                        _window.Screen.Text(1, 1, $"Score: {Score}");
-                        _window.Screen.Text(8,8, $"{snake.Parts.First().X} {snake.Parts.First().Y}");
+                        _window.Screen.SetColor("#669999");
+                        _window.Screen.Rectangle(200,0, 120, 200);
+                        _window.Screen.SetColor("#000");
+                        _window.Screen.Text(205, 2, $"Score: {Score}");
+                        
                     });
                 };
 

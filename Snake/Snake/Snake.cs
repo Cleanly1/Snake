@@ -15,13 +15,16 @@ namespace Snake
 
         public int length { get; set; }
 
-        public List<SnakeParts> Parts = new List<SnakeParts>();
+        public String SnakeColor { get; set; } = "#336600";
+        public String SnakeSecondColor { get; set; } = "#000";
+
+        public readonly List<SnakeParts> Parts = new List<SnakeParts>();
         public Snake()
         {
             Orientation = "right";
-            length = 1;
-            Parts.Add(new SnakeParts(320 / 2, 200 / 2, Orientation));
-            Parts.Add(new SnakeParts(320 / 2, 200 / 2, Orientation));
+            length = 2;
+            Parts.Add(new SnakeParts(200 / 2, 200 / 2, Orientation));
+            Parts.Add(new SnakeParts(200 / 2, 200 / 2, Orientation));
         }
         
         public void SetDir(int x, int y)
@@ -39,8 +42,10 @@ namespace Snake
             Parts.Add(new SnakeParts(newX, newY, Orientation));
         }
 
-        public void CheckForCol(int x, int y)
+        public void CheckForCol()
         {
+            var x = Parts.Last().X;
+            var y = Parts.Last().Y;
             /*
             for (var index = 0; index < Parts.Count; index++)
             {
@@ -87,78 +92,47 @@ namespace Snake
         {
             for (int i = 0; i < length; i++)
             {
+                
                 var part = Parts[i];
-                if (i != length - 1)
+                var direction = i != length - 1 ? part.Orientation : Orientation;
+                switch (direction)
                 {
-                    switch (part.Orientation)
-                    {
-                        case "up":
-                            screen.SetColor("#336600");
-                            screen.Rectangle(part.X, part.Y + 2, 5, 3);
-                            screen.SetColor("#000");
-                            screen.Rectangle(part.X, part.Y, 5, 2);
-                            break;
-                        case "down":
-                            screen.SetColor("#336600");
-                            screen.Rectangle(part.X, part.Y, 5, 3);
-                            screen.SetColor("#000");
-                            screen.Rectangle(part.X, part.Y + 3, 5, 2);
-                            break;
-                        case "left":
-                            screen.SetColor("#336600");
-                            screen.Rectangle(part.X + 2, part.Y, 3, 5);
-                            screen.SetColor("#000");
-                            screen.Rectangle(part.X, part.Y, 2, 5);
-                            break;
-                        case "right":
-                            screen.SetColor("#336600");
-                            screen.Rectangle(part.X, part.Y, 3, 5);
-                            screen.SetColor("#000");
-                            screen.Rectangle(part.X + 3, part.Y, 2, 5);
-                            break;
-                    }
-                }
-                else
-                {
-                    switch (Orientation)
-                    {
-                        case "up":
-                            screen.SetColor("#336600");
-                            screen.Rectangle(part.X, part.Y + 2, 5, 3);
-                            screen.SetColor("#000");
-                            screen.Rectangle(part.X, part.Y, 5, 2);
-                            break;
-                        case "down":
-                            screen.SetColor("#336600");
-                            screen.Rectangle(part.X, part.Y, 5, 3);
-                            screen.SetColor("#000");
-                            screen.Rectangle(part.X, part.Y + 3, 5, 2);
-                            break;
-                        case "left":
-                            screen.SetColor("#336600");
-                            screen.Rectangle(part.X + 2, part.Y, 3, 5);
-                            screen.SetColor("#000");
-                            screen.Rectangle(part.X, part.Y, 2, 5);
-                            break;
-                        case "right":
-                            screen.SetColor("#336600");
-                            screen.Rectangle(part.X, part.Y, 3, 5);
-                            screen.SetColor("#000");
-                            screen.Rectangle(part.X + 3, part.Y, 2, 5);
-                            break;
-                    }
+                    case "up":
+                        screen.SetColor(SnakeColor);
+                        screen.Rectangle(part.X, part.Y + 2, 5, 3);
+                        screen.SetColor(SnakeSecondColor);
+                        screen.Rectangle(part.X, part.Y, 5, 2);
+                        break;
+                    case "down":
+                        screen.SetColor(SnakeColor);
+                        screen.Rectangle(part.X, part.Y, 5, 3);
+                        screen.SetColor(SnakeSecondColor);
+                        screen.Rectangle(part.X, part.Y + 3, 5, 2);
+                        break;
+                    case "left":
+                        screen.SetColor(SnakeColor);
+                        screen.Rectangle(part.X + 2, part.Y, 3, 5);
+                        screen.SetColor(SnakeSecondColor);
+                        screen.Rectangle(part.X, part.Y, 2, 5);
+                        break;
+                    case "right":
+                        screen.SetColor(SnakeColor);
+                        screen.Rectangle(part.X, part.Y, 3, 5);
+                        screen.SetColor(SnakeSecondColor);
+                        screen.Rectangle(part.X + 3, part.Y, 2, 5);
+                        break;
                 }
             }
         }
         public void Draw(Screen screen)
         {
-            if (Parts.Last().X > 320 || Parts.Last().X <= 0 || Parts.Last().Y <= 0 || Parts.Last().Y > 195)
+            if (Parts.Last().X == 200 || Parts.Last().X <= 0 || Parts.Last().Y <= 0 || Parts.Last().Y == 200)
             {
                 Console.WriteLine("Exit");
                 Environment.Exit(0);
             }
 
-            CheckForCol(Parts.Last().X, Parts.Last().Y);
+            CheckForCol();
 
             Move();
             Show(screen);

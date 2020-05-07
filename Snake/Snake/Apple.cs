@@ -7,46 +7,44 @@ namespace Snake
 {
     public class Apple
     {
-        public bool AppleExist;
+        private bool _appleExist;
 
-        public int RandomX;
-        public int RandomY;
+        private int _randomX;
+        private int _randomY;
         public void Draw(Random random, Screen screen, List<SnakeParts> parts)
         {
-            if (!AppleExist)
+            if (!_appleExist)
             {
                 int baseNumber = 5;
-                RandomX = random.Next(1, 62) * baseNumber;
-                RandomY = random.Next(1, 38) * baseNumber;
+                _randomX = random.Next(1, 38) * baseNumber;
+                _randomY = random.Next(1, 38) * baseNumber;
                 foreach (var part in parts)
                 {
-                    if (part.X == RandomX)
+                    if (part.X == _randomX)
                     {
-                        RandomX = random.Next(1, 62) * baseNumber;
+                        _randomX = random.Next(1, 38) * baseNumber;
                     }
-                    if (part.Y == RandomY)
+                    if (part.Y == _randomY)
                     {
-                        RandomY = random.Next(1, 38) * baseNumber;
+                        _randomY = random.Next(1, 38) * baseNumber;
                     }
                 }
 
-                AppleExist = true;
+                _appleExist = true;
             }
             screen.SetColor("#ff3300");            
-            screen.Rectangle(RandomX, RandomY, 5, 5);
+            screen.Rectangle(_randomX, _randomY, 5, 5);
         }
 
         public bool CheckIfEat(Screen screen, List<SnakeParts> parts)
         {
             var head = parts.Last();
-            
-            if (RandomX == head.X && RandomY == head.Y)
-            {
-                AppleExist = false;
-                return true;
-            }
 
-            return false;
+            if (_randomX != head.X || _randomY != head.Y) return false;
+            
+            _appleExist = false;
+            return true;
+
         }
     }
 }

@@ -9,10 +9,12 @@ namespace Snake
         ScheduleTimer _timer;
         
         public bool Paused { get; private set; }
+        public bool Started { get; private set; }
         public Action OnTick;
         public void Start()
         {
             Console.WriteLine("Start");
+            Started = true;
             Tick();
         }
 
@@ -48,7 +50,7 @@ namespace Snake
 
         void ScheduleNextTick()
         {
-            _timer = new ScheduleTimer(100, Tick);
+            _timer = new ScheduleTimer(150, Tick);
         }
     }
 }

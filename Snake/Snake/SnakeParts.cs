@@ -1,14 +1,11 @@
-using System.Collections.Generic;
-using System;
-
 namespace Snake
 {
     public class SnakeParts
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int X { get; }
+        public int Y { get; }
 
-        public string Orientation;
+        public readonly string Orientation;
         public SnakeParts(int x, int y, string orientation)
         {
             X = x;
