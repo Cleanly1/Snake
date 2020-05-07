@@ -38,7 +38,7 @@ namespace Snake
 
         public bool CheckIfEat(Screen screen, List<SnakeParts> parts)
         {
-            var head = parts.First();
+            var head = parts.Last();
             
             if (RandomX == head.X && RandomY == head.Y)
             {

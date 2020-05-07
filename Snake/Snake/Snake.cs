@@ -7,8 +7,6 @@ namespace Snake
 {
     public class Snake
     {
-        public int X { get; set; }
-        public int Y { get; set; }
         public string Orientation { get; set; }
         
         public int Xdir { get; set; }
@@ -20,14 +18,13 @@ namespace Snake
         public List<SnakeParts> Parts = new List<SnakeParts>();
         public Snake()
         {
-            X = 320 / 2;
-            Y = 200 / 2;
             Orientation = "right";
             length = 1;
-            Parts.Add(new SnakeParts(X, Y, Orientation));
+            Parts.Add(new SnakeParts(320 / 2, 200 / 2, Orientation));
+            Parts.Add(new SnakeParts(320 / 2, 200 / 2, Orientation));
         }
         
-        public void setDir(int x, int y)
+        public void SetDir(int x, int y)
         {
             Xdir = x;
             Ydir = y;
@@ -35,78 +32,137 @@ namespace Snake
 
         public void AddPart()
         {
-            var firstPart = Parts.First();
-            firstPart.X += Xdir;
-            firstPart.Y += Ydir;
+            var firstPart = Parts.Last();
+            var newX = firstPart.X;
+            var newY = firstPart.Y;
             length++;
-            Parts.Add(new SnakeParts(firstPart.X, firstPart.Y, Orientation));
+            Parts.Add(new SnakeParts(newX, newY, Orientation));
         }
-        
-        private void Update()
+
+        public void CheckForCol(int x, int y)
         {
-            var firstPart = Parts.First();
-            Parts.RemoveAt(0);
-            firstPart.X += Xdir;
-            firstPart.Y += Ydir;
-            Parts.Add(firstPart);
             /*
+            for (var index = 0; index < Parts.Count; index++)
+            {
+                var part = Parts[index];
+                if (x == part.X && y == part.Y && index != Parts.Count)
+                {
+                    Console.WriteLine("Exit");
+                    Environment.Exit(0);
+                }
+            }*/
+        }
+
+        private void Move()
+        {
             switch (Orientation)
             {
                 case "up":
-                    var part = new SnakeParts(firstPart.X, firstPart.Y - 5, Orientation);
+                    SetDir(0, -5);
                     break;
                 case "down":
-                    Parts.Add(new SnakeParts(firstPart.X, firstPart.Y + 5, Orientation));
+                    SetDir(0, +5);
                     break;
                 case "left":
-                    Parts.Add(new SnakeParts(firstPart.X - 5, firstPart.Y, Orientation));
+                    SetDir(-5, 0);
                     break;
                 case "right":
-                    Parts.Add(new SnakeParts(firstPart.X + 5, firstPart.Y, Orientation));
+                    SetDir(+5, 0);
                     break;
-            }*/
+            }
+            
+            var newX = Parts.Last().X;
+            var newY = Parts.Last().Y;
 
+            newX += Xdir;
+            newY += Ydir;
+            
+            Parts.RemoveAt(0);
 
-
+            Parts.Add(new SnakeParts(newX,newY, Orientation));
+            
         }
 
-        public void Show(Screen screen)
+        private void Show(Screen screen)
         {
             for (int i = 0; i < length; i++)
             {
                 var part = Parts[i];
-                if (Orientation == "up" || Orientation == "down")
+                if (i != length - 1)
                 {
-                    screen.SetColor("#336600");
-                    screen.Rectangle(part.X, part.Y, 5, 5);
-                    /*
-                    screen.SetColor("#000");
-                    screen.Rectangle(part.X, part.Y + 3, 5, 2);
-                    */
+                    switch (part.Orientation)
+                    {
+                        case "up":
+                            screen.SetColor("#336600");
+                            screen.Rectangle(part.X, part.Y + 2, 5, 3);
+                            screen.SetColor("#000");
+                            screen.Rectangle(part.X, part.Y, 5, 2);
+                            break;
+                        case "down":
+                            screen.SetColor("#336600");
+                            screen.Rectangle(part.X, part.Y, 5, 3);
+                            screen.SetColor("#000");
+                            screen.Rectangle(part.X, part.Y + 3, 5, 2);
+                            break;
+                        case "left":
+                            screen.SetColor("#336600");
+                            screen.Rectangle(part.X + 2, part.Y, 3, 5);
+                            screen.SetColor("#000");
+                            screen.Rectangle(part.X, part.Y, 2, 5);
+                            break;
+                        case "right":
+                            screen.SetColor("#336600");
+                            screen.Rectangle(part.X, part.Y, 3, 5);
+                            screen.SetColor("#000");
+                            screen.Rectangle(part.X + 3, part.Y, 2, 5);
+                            break;
+                    }
                 }
                 else
                 {
-                    screen.SetColor("#336600");
-                    screen.Rectangle(part.X, part.Y, 5, 5);
-                    /*
-                    screen.SetColor("#000");
-                    screen.Rectangle(part.X + 3, part.Y, 2, 5);
-                    */
+                    switch (Orientation)
+                    {
+                        case "up":
+                            screen.SetColor("#336600");
+                            screen.Rectangle(part.X, part.Y + 2, 5, 3);
+                            screen.SetColor("#000");
+                            screen.Rectangle(part.X, part.Y, 5, 2);
+                            break;
+                        case "down":
+                            screen.SetColor("#336600");
+                            screen.Rectangle(part.X, part.Y, 5, 3);
+                            screen.SetColor("#000");
+                            screen.Rectangle(part.X, part.Y + 3, 5, 2);
+                            break;
+                        case "left":
+                            screen.SetColor("#336600");
+                            screen.Rectangle(part.X + 2, part.Y, 3, 5);
+                            screen.SetColor("#000");
+                            screen.Rectangle(part.X, part.Y, 2, 5);
+                            break;
+                        case "right":
+                            screen.SetColor("#336600");
+                            screen.Rectangle(part.X, part.Y, 3, 5);
+                            screen.SetColor("#000");
+                            screen.Rectangle(part.X + 3, part.Y, 2, 5);
+                            break;
+                    }
                 }
             }
         }
         public void Draw(Screen screen)
         {
-            if (Parts.First().X > 315 || Parts.First().X <= 0 || Parts.First().Y <= 0 || Parts.First().Y > 195)
+            if (Parts.Last().X > 320 || Parts.Last().X <= 0 || Parts.Last().Y <= 0 || Parts.Last().Y > 195)
             {
                 Console.WriteLine("Exit");
                 Environment.Exit(0);
             }
 
-            Update();
+            CheckForCol(Parts.Last().X, Parts.Last().Y);
+
+            Move();
             Show(screen);
 
-            
             screen.Buffer.Commit();
         }
             

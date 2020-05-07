@@ -25,12 +25,20 @@ namespace Snake
             {
                 switch (key)
                 {
+                    case ConsoleKey.S :
+                        game.Start();
+                        break;
                     case ConsoleKey.RightArrow:
                         if (game.Paused)
                         {
                             break;
                         }
-                        snake.setDir(+5, 0);
+
+                        if (snake.Orientation != "left")
+                        {
+                            snake.Orientation = "right";
+                        }
+
                         break;
 
                     case ConsoleKey.LeftArrow:
@@ -38,8 +46,12 @@ namespace Snake
                         {
                             break;
                         }
-
-                        snake.setDir(-5, 0);
+                        if (snake.Orientation != "right")
+                        {
+                            snake.Orientation = "left";
+                            
+                        }
+                        
                         break;
 
                     case ConsoleKey.UpArrow:
@@ -47,7 +59,12 @@ namespace Snake
                         {
                             break;
                         }
-                        snake.setDir(0, -5);
+                        if (snake.Orientation != "down")
+                        {
+                            snake.Orientation = "up";
+                            
+                        }
+                        
                         break;
 
                     case ConsoleKey.DownArrow:
@@ -55,7 +72,11 @@ namespace Snake
                         {
                             break;
                         }
-                        snake.setDir(0, +5);
+                        if (snake.Orientation != "up")
+                        {
+                            snake.Orientation = "down";
+                        }
+                        
                         break;
 
                     case ConsoleKey.Escape:
@@ -82,7 +103,14 @@ namespace Snake
 
             _window.OnReady = window =>
             {
-                game.Start();
+                window.Invoke(() =>
+                {
+                    _window.Screen.SetColor("#33cc33");
+                    _window.Screen.Rectangle(0,0, 320, 200);
+                    _window.Screen.SetColor("#000");
+                    _window.Screen.Text(320/2 - 50, 200/2, "Press \"S\" to start the game");
+                });
+                //game.Start();
                 snake = new Snake();
                 game.OnTick = () =>
                 {
@@ -98,14 +126,12 @@ namespace Snake
                             Score += 1;
                         }
                         _window.Screen.Text(1, 1, $"Score: {Score}");
-                        _window.Screen.Text(8,8, $"{apple.RandomX} {apple.RandomY}");
+                        _window.Screen.Text(8,8, $"{snake.Parts.First().X} {snake.Parts.First().Y}");
                     });
                 };
 
             };
-            
-            
-            
+
             _window.Load();
         }
     }

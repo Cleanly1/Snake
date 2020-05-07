@@ -48,7 +48,7 @@ namespace Snake
 
         void ScheduleNextTick()
         {
-            _timer = new ScheduleTimer(300, Tick);
+            _timer = new ScheduleTimer(100, Tick);
         }
     }
 }
