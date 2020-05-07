@@ -13,7 +13,7 @@ namespace Snake
         
         public int Ydir { get; set; }
 
-        public int length { get; set; }
+        public int Length { get; set; }
 
         public String SnakeColor { get; set; } = "#336600";
         public String SnakeSecondColor { get; set; } = "#000";
@@ -22,12 +22,12 @@ namespace Snake
         public Snake()
         {
             Orientation = "right";
-            length = 2;
+            Length = 2;
             Parts.Add(new SnakeParts(200 / 2, 200 / 2, Orientation));
-            Parts.Add(new SnakeParts(200 / 2, 200 / 2, Orientation));
+            Parts.Add(new SnakeParts(200 / 2 - 5, 200 / 2, Orientation));
         }
         
-        public void SetDir(int x, int y)
+        private void SetDir(int x, int y)
         {
             Xdir = x;
             Ydir = y;
@@ -38,24 +38,31 @@ namespace Snake
             var firstPart = Parts.Last();
             var newX = firstPart.X;
             var newY = firstPart.Y;
-            length++;
+            Length++;
             Parts.Add(new SnakeParts(newX, newY, Orientation));
+
         }
 
-        public void CheckForCol()
+        public bool CheckForCol()
         {
             var x = Parts.Last().X;
             var y = Parts.Last().Y;
-            /*
-            for (var index = 0; index < Parts.Count; index++)
+            
+            if (Parts.Last().X == 200 || Parts.Last().X < 0 || Parts.Last().Y < 0 || Parts.Last().Y == 200)
             {
-                var part = Parts[index];
-                if (x == part.X && y == part.Y && index != Parts.Count)
+                return true;
+            }
+
+            for (var i = 0; i < Parts.Count - 1; i++)
+            {
+                var part = Parts[i];
+                if (part.X == x && part.Y == y)
                 {
-                    Console.WriteLine("Exit");
-                    Environment.Exit(0);
+                    return true;
                 }
-            }*/
+            }
+
+            return false;
         }
 
         private void Move()
@@ -84,17 +91,17 @@ namespace Snake
             
             Parts.RemoveAt(0);
 
-            Parts.Add(new SnakeParts(newX,newY, Orientation));
+            Parts.Add(new SnakeParts(newX, newY, Orientation));
             
         }
 
         private void Show(Screen screen)
         {
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < Length; i++)
             {
                 
                 var part = Parts[i];
-                var direction = i != length - 1 ? part.Orientation : Orientation;
+                var direction = i != Length - 1 ? part.Orientation : Orientation;
                 switch (direction)
                 {
                     case "up":
@@ -126,16 +133,10 @@ namespace Snake
         }
         public void Draw(Screen screen)
         {
-            if (Parts.Last().X == 200 || Parts.Last().X <= 0 || Parts.Last().Y <= 0 || Parts.Last().Y == 200)
-            {
-                Console.WriteLine("Exit");
-                Environment.Exit(0);
-            }
-
-            CheckForCol();
-
             Move();
             Show(screen);
+
+            
 
             screen.Buffer.Commit();
         }

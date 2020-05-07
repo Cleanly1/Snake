@@ -90,7 +90,7 @@ namespace Snake
                             break;
                         }
 
-                        _window.Invoke(() => { _window.Screen.Text(8, 8, "Paused"); });
+                        _window.Invoke(() => { _window.Screen.Text(205, 8, "Paused"); });
                         game.Pause();
                         
 
@@ -118,7 +118,7 @@ namespace Snake
                         if (!game.Started)
                         {
                             snake.SnakeColor = "#ff9900";
-                            snake.SnakeSecondColor = "#ffff00";
+                            snake.SnakeSecondColor = "#ffcc00";
                             
                         }
                         break;
@@ -141,27 +141,44 @@ namespace Snake
                     _window.Screen.Text(205, 10, "Press \"B\" for Blue Snake");
                     _window.Screen.Text(205, 15, "Press \"O\" for Orange Snake");
                 });
-                //game.Start();
+                
                 snake = new Snake();
                 game.OnTick = () =>
                 {
+                    if (snake.CheckForCol())
+                    {
+                        game.Stop();
+                        window.Invoke(() => 
+                        {
+                            _window.Screen.SetColor("#ff9900");
+                            _window.Screen.Rectangle( 80, 45, 60, 60);
+                            _window.Screen.SetColor("#000");
+                            _window.Screen.Rectangle( 85, 50, 50, 50);
+                            _window.Screen.SetColor("#FFF");
+                            _window.Screen.Text(95, 70, "GAME OVER");
+                            _window.Screen.Text(90, 76, "Press \"ESC\" to");
+                            _window.Screen.Text(95, 81, "End Game");
+                        });
+                    }
                     window.Invoke(() =>
                     {
+                        if (game.Ended) return;
                         _window.Screen.SetColor("#33cc33");
-                        _window.Screen.Rectangle(0,0, 200, 200);
+                        _window.Screen.Rectangle(0, 0, 200, 200);
                         apple.Draw(Random, _window.Screen, snake.Parts);
-                        snake.Draw(_window.Screen);
                         if (apple.CheckIfEat(_window.Screen, snake.Parts))
                         {
                             snake.AddPart();
                             Score += 1;
                         }
+                        snake.Draw(_window.Screen);
                         _window.Screen.SetColor("#669999");
-                        _window.Screen.Rectangle(200,0, 120, 200);
+                        _window.Screen.Rectangle(200, 0, 120, 200);
                         _window.Screen.SetColor("#000");
                         _window.Screen.Text(205, 2, $"Score: {Score}");
-                        
+
                     });
+                    
                 };
 
             };
