@@ -24,7 +24,7 @@ namespace Snake
             Orientation = "right";
             Length = 2;
             Parts.Add(new SnakeParts(200 / 2, 200 / 2, Orientation));
-            Parts.Add(new SnakeParts(200 / 2 - 5, 200 / 2, Orientation));
+            Parts.Add(new SnakeParts(200 / 2 - 10, 200 / 2, Orientation));
         }
         
         private void SetDir(int x, int y)
@@ -70,16 +70,16 @@ namespace Snake
             switch (Orientation)
             {
                 case "up":
-                    SetDir(0, -5);
+                    SetDir(0, -10);
                     break;
                 case "down":
-                    SetDir(0, +5);
+                    SetDir(0, +10);
                     break;
                 case "left":
-                    SetDir(-5, 0);
+                    SetDir(-10, 0);
                     break;
                 case "right":
-                    SetDir(+5, 0);
+                    SetDir(+10, 0);
                     break;
             }
             
@@ -106,27 +106,27 @@ namespace Snake
                 {
                     case "up":
                         screen.SetColor(SnakeColor);
-                        screen.Rectangle(part.X, part.Y + 2, 5, 3);
+                        screen.Rectangle(part.X, part.Y + 4, 10, 6);
                         screen.SetColor(SnakeSecondColor);
-                        screen.Rectangle(part.X, part.Y, 5, 2);
+                        screen.Rectangle(part.X, part.Y, 10, 4);
                         break;
                     case "down":
                         screen.SetColor(SnakeColor);
-                        screen.Rectangle(part.X, part.Y, 5, 3);
+                        screen.Rectangle(part.X, part.Y, 10, 6);
                         screen.SetColor(SnakeSecondColor);
-                        screen.Rectangle(part.X, part.Y + 3, 5, 2);
+                        screen.Rectangle(part.X, part.Y + 6, 10, 4);
                         break;
                     case "left":
                         screen.SetColor(SnakeColor);
-                        screen.Rectangle(part.X + 2, part.Y, 3, 5);
+                        screen.Rectangle(part.X + 4, part.Y, 6, 10);
                         screen.SetColor(SnakeSecondColor);
-                        screen.Rectangle(part.X, part.Y, 2, 5);
+                        screen.Rectangle(part.X, part.Y, 4, 10);
                         break;
                     case "right":
                         screen.SetColor(SnakeColor);
-                        screen.Rectangle(part.X, part.Y, 3, 5);
+                        screen.Rectangle(part.X, part.Y, 6, 10);
                         screen.SetColor(SnakeSecondColor);
-                        screen.Rectangle(part.X + 3, part.Y, 2, 5);
+                        screen.Rectangle(part.X + 6, part.Y, 4, 10);
                         break;
                 }
             }

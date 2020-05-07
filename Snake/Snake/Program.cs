@@ -137,7 +137,9 @@ namespace Snake
                     _window.Screen.SetColor("#669999");
                     _window.Screen.Rectangle(200,0, 120, 200);
                     _window.Screen.SetColor("#000");
-                    _window.Screen.Text(200/2 - 50, 200/2, "Press \"S\" to start the game");
+                    _window.Screen.Rectangle(200, 0, 2, 200);
+                    _window.Screen.SetColor("#000");
+                    _window.Screen.Text(200/2 - 40, 200/2 - 20, "Press \"S\" to start the game");
                     _window.Screen.Text(205, 10, "Press \"B\" for Blue Snake");
                     _window.Screen.Text(205, 15, "Press \"O\" for Orange Snake");
                 });
@@ -151,13 +153,13 @@ namespace Snake
                         window.Invoke(() => 
                         {
                             _window.Screen.SetColor("#ff9900");
-                            _window.Screen.Rectangle( 80, 45, 60, 60);
+                            _window.Screen.Rectangle( 75, 45, 60, 60);
                             _window.Screen.SetColor("#000");
-                            _window.Screen.Rectangle( 85, 50, 50, 50);
+                            _window.Screen.Rectangle( 80, 50, 50, 50);
                             _window.Screen.SetColor("#FFF");
-                            _window.Screen.Text(95, 70, "GAME OVER");
-                            _window.Screen.Text(90, 76, "Press \"ESC\" to");
-                            _window.Screen.Text(95, 81, "End Game");
+                            _window.Screen.Text(90, 67, "GAME OVER");
+                            _window.Screen.Text(84, 74, "Press \"ESC\" to");
+                            _window.Screen.Text(93, 79, "End Game");
                         });
                     }
                     window.Invoke(() =>
@@ -169,11 +171,14 @@ namespace Snake
                         if (apple.CheckIfEat(_window.Screen, snake.Parts))
                         {
                             snake.AddPart();
+                            snake.AddPart();
                             Score += 1;
                         }
                         snake.Draw(_window.Screen);
                         _window.Screen.SetColor("#669999");
                         _window.Screen.Rectangle(200, 0, 120, 200);
+                        _window.Screen.SetColor("#000");
+                        _window.Screen.Rectangle(200, 0, 2, 200);
                         _window.Screen.SetColor("#000");
                         _window.Screen.Text(205, 2, $"Score: {Score}");
 
