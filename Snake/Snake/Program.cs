@@ -84,6 +84,8 @@ namespace Snake
                         break;
                     
                     case ConsoleKey.P:
+                        if (game.Ended) break;
+                        
                         if (game.Paused)
                         {
                             game.Resume();
@@ -98,7 +100,7 @@ namespace Snake
                     
                     case ConsoleKey.S:
 
-                        if (!game.Started)
+                        if (!game.Started || !game.Ended)
                         {
                             game.Start(); 
                         }
