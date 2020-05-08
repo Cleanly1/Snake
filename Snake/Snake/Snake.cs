@@ -131,6 +131,13 @@ namespace Snake
                 }
             }
         }
+
+        public void SetColors(string firstColor, string secondColor)
+        {
+            SnakeColor = firstColor;
+            SnakeSecondColor = secondColor;
+        }
+        
         public void Draw(Screen screen)
         {
             Move();

@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="23ac5588-831f-457b-9c82-81f4e310b65b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Snake/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Snake/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Snake/Apple.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Snake/Apple.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Snake/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Snake/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Snake/Snake.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Snake/Snake.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,9 +28,9 @@
         <option value="$PROJECT_DIR$/Snake/ScheduleTimer.cs" />
         <option value="$PROJECT_DIR$/Snake/SnakeParts.cs" />
         <option value="$PROJECT_DIR$/Snake/Game.cs" />
-        <option value="$PROJECT_DIR$/Snake/Program.cs" />
         <option value="$PROJECT_DIR$/Snake/Apple.cs" />
         <option value="$PROJECT_DIR$/Snake/Snake.cs" />
+        <option value="$PROJECT_DIR$/Snake/Program.cs" />
       </list>
     </option>
   </component>
@@ -93,7 +90,7 @@
       <workItem from="1587630936815" duration="32866000" />
       <workItem from="1588679841927" duration="282000" />
       <workItem from="1588774967288" duration="8713000" />
-      <workItem from="1588861692443" duration="12670000" />
+      <workItem from="1588861692443" duration="13967000" />
     </task>
     <servers />
   </component>
@@ -196,6 +193,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="1398" height="303" key="GridCell.Tab.4.right/0.0.1440.900@0.0.1440.900" timestamp="1588853461389" />
+    <state x="188" y="163" key="Rider.ProjectTemplateDialog.Size" timestamp="1588925007988">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="188" y="163" key="Rider.ProjectTemplateDialog.Size/0.0.1440.900@0.0.1440.900" timestamp="1588925007988" />
     <state x="221" y="89" key="SettingsEditor" timestamp="1587730027286">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

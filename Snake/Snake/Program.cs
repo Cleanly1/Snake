@@ -108,8 +108,7 @@ namespace Snake
                     case ConsoleKey.B:
                         if (!game.Started)
                         {
-                            snake.SnakeColor = "#0000ff";
-                            snake.SnakeSecondColor = "#ffff00";
+                            snake.SetColors("#0000ff", "#ffff00");
                         }
                         
                         break;
@@ -117,9 +116,7 @@ namespace Snake
                     case ConsoleKey.O:
                         if (!game.Started)
                         {
-                            snake.SnakeColor = "#ff9900";
-                            snake.SnakeSecondColor = "#ffcc00";
-                            
+                            snake.SetColors("#ff9900", "#ffcc00");
                         }
                         break;
 
